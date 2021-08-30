@@ -5,22 +5,27 @@ import List from "./components/List";
 import Item from "./components/Item";
 import Editor from "./components/Editor";
 import Preview from "./components/Preview";
+import uuid from 'react-uuid'
 
 function App() {
-  const [items, setItems] = useState([
-    {
-      id: 2,
-      title: "mi tercera nota",
-      text: "# hola a todos",
+  const [items, setItems] = useState([]);
+
+  const handleNew = () => {
+    const note = {
+      id: uuid(),
+      title: '',
+      text: '',
       pinned: false,
       created: Date.now(),
-    },
-  ]);
+    };
+
+    setItems([...items, note]);
+  };
 
   return (
     <div className="App container">
       <Panel>
-        <Menu items={items} setItems={setItems} />
+        <Menu onNew={handleNew} />
         <List>
           {items.map((item, i) => {
             return <Item key={item.id} item={item} />;

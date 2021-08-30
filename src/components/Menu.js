@@ -1,21 +1,10 @@
 import React from "react";
 
-export default function Menu({setItems, items}) {
-  const handleClick = () => {
-    const note = {
-      id: 2,
-      title: "mi tercera nota",
-      text: "# hola a todos",
-      pinned: false,
-      created: Date.now(),
-    };
-
-    setItems([...items, note]);
-  };
+export default function Menu({ onNew }) {
   return (
     <div className="menu">
       <input className="search" placeholder="Search..." />
-      <button className="btn" onClick={(e) => handleClick()}>
+      <button className="btn" onClick={(e) => onNew()}>
         Add notes
       </button>
     </div>
