@@ -113,3 +113,7 @@ body {
 
   background-color: transparent;
 }
+
+.activeNote {
+  background-color: #2084e2;
+}
