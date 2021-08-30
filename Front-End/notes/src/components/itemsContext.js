@@ -1,2 +1,8 @@
 import React from 'react'
-const ItemsContext = React.createContext()
+
+const ItemsContext = React.createContext({
+    onNew: () =>{},
+    onSearch: () =>{}
+})
+
+export default ItemsContext;

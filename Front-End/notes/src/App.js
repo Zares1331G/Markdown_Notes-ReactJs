@@ -6,6 +6,7 @@ import Item from "./components/Item";
 import Editor from "./components/Editor";
 import Preview from "./components/Preview";
 import uuid from "react-uuid";
+import ItemsContext from "./components/ItemsContext";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -15,8 +16,8 @@ function App() {
   const handleNew = () => {
     const note = {
       id: uuid(),
-      title: '[Title]',
-      text: '[Text]',
+      title: "[Title]",
+      text: "[Text]",
       pinned: false,
       created: Date.now(),
     };
@@ -127,7 +128,9 @@ function App() {
   return (
     <div className="App container">
       <Panel>
-        <Menu onNew={handleNew} onSearch={handleSearch} />
+        <ItemsContext.Provider value={{onSearch: handleSearch, onNew: handleNew}}>
+          <Menu />
+        </ItemsContext.Provider>
         <List>
           {copyItems.map((item, i) => {
             return (

@@ -1,14 +1,24 @@
-import React from "react";
+import React, {useContext} from "react";
+import ItemsContext from "./ItemsContext";
 
-export default function Menu({ onNew, onSearch }) {
+export default function Menu() {
+  const itemsContext = useContext(ItemsContext);
 
-  const handleChange = (e) =>{
-    onSearch(e)
-  }
+  const handleClick = () => {
+    itemsContext.onNew();
+  };
+
+  const handleChange = (e) => {
+    itemsContext.onSearch(e);
+  };
   return (
     <div className="menu">
-      <input className="search" placeholder="Search..." onChange={handleChange}/>
-      <button className="btn" onClick={(e) => onNew()}>
+      <input
+        className="search"
+        placeholder="Search..."
+        onChange={handleChange}
+      />
+      <button className="btn" onClick={() => handleClick()}>
         Add notes
       </button>
     </div>
