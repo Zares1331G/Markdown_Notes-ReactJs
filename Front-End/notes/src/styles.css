@@ -117,3 +117,8 @@ body {
 .activeNote {
   background-color: #2084e2;
 }
+
+.statusCodeContainer {
+  color: #000000;
+  height: 25px;
+}
