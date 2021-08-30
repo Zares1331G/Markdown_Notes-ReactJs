@@ -1,5 +1,4 @@
-# Markdown_Notes-ReactJs_and_NodeJs
-Prueba tecnica para **DATION**
+# Prueba tecnica para DATION con Markdown, ReactJs y NodeJs
 
 La prueba no fue finalizada con todos los requerimientosque solicitaban pero por cuestiones de tiempo solo pude llegar hasta este punto.
 
