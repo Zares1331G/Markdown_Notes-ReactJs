@@ -9,6 +9,7 @@ import uuid from "react-uuid";
 import ItemsContext from "./components/ItemsContext";
 import { get, post, put } from "./libs/http";
 import StatusContext from "./components/StatusContext";
+import NavBar from "./components/NavBar";
 
 function App() {
   const URL = "http://localhost:3010/";
@@ -118,35 +119,36 @@ function App() {
     setCopyItems(notes);
   };
 
-  function autosave(){
-    console.log('Entro en autoSave')
-    if(!lock){
+  function autosave() {
+    if (!lock) {
+      console.log("Entro en autoSave");
+
       setLock(true);
       setStatus(1);
-      setTimeout(() =>{
+      setTimeout(() => {
         save();
-      }, 3000)
+      }, 3000);
     }
   }
 
-  async function save(){
-    console.log('Entro en Save')
-    const item = items[actualIndex]
-    
+  async function save() {
+    const item = items[actualIndex];
+
     // eslint-disable-next-line
-    const response = await put(`${URL}update`, item)
+    const response = await put(`${URL}update`, item);
 
     setStatus(2);
 
-    setTimeout(() =>{
-      setStatus(0)
-    }, 1000)
+    setTimeout(() => {
+      console.log("Entro en Save");
+      setStatus(0);
+    }, 1000);
   }
 
   const renderEditiorAndPreviewUI = () => {
     return (
       <>
-        <StatusContext.Provider value={{status: status, autosave: autosave}}>
+        <StatusContext.Provider value={{ status: status, autosave: autosave }}>
           <Editor
             item={copyItems[actualIndex]}
             onChangeTitle={onChangeTitle}
@@ -178,29 +180,32 @@ function App() {
   };
 
   return (
-    <div className="App container">
-      <Panel>
-        <ItemsContext.Provider
-          value={{ onSearch: handleSearch, onNew: handleNew }}
-        >
-          <Menu />
-        </ItemsContext.Provider>
-        <List>
-          {copyItems.map((item, i) => {
-            return (
-              <Item
-                key={item.id}
-                actualIndex={actualIndex}
-                item={item}
-                index={i}
-                onHandlePinned={handlePinned}
-                onHandleSelectNote={handleSelectNote}
-              />
-            );
-          })}
-        </List>
-      </Panel>
-      <>{actualIndex >= 0 ? renderEditiorAndPreviewUI() : ""}</>
+    <div className="App">
+      <ItemsContext.Provider
+        value={{ onSearch: handleSearch, onNew: handleNew, actualIndex: setActualIndex }}
+      >
+        <NavBar />
+        <div className="container">
+          <Panel>
+            <Menu />
+            <List>
+              {copyItems.map((item, i) => {
+                return (
+                  <Item
+                    key={item.id}
+                    actualIndex={actualIndex}
+                    item={item}
+                    index={i}
+                    onHandlePinned={handlePinned}
+                    onHandleSelectNote={handleSelectNote}
+                  />
+                );
+              })}
+            </List>
+          </Panel>
+          <>{actualIndex >= 0 ? renderEditiorAndPreviewUI() : ""}</>
+        </div>
+      </ItemsContext.Provider>
     </div>
   );
 }

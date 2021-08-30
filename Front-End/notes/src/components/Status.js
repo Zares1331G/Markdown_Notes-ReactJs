@@ -3,9 +3,9 @@ import React from "react";
 export default function Status({ statusCode }) {
   return (
     <div className="statusCodeContainer">
-      {(statusCode === 0) ? "" : ""}
-      {(statusCode === 1) ? "saving..." : ""}
-      {(statusCode === 2) ? "document saved" : ""}
+      {(statusCode.status === 0) ? "" : ""}
+      {(statusCode.status === 1) ? "saving..." : ""}
+      {(statusCode.status === 2) ? "document saved" : ""}
     </div>
   );
 }
