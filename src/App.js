@@ -28,6 +28,7 @@ function App() {
     let res = getOrderesNotes(notes);
 
     setItems(res);
+    setCopyItems(res);
   };
   const handlePinned = (item, i) => {
     setActualIndex(i);
@@ -39,6 +40,7 @@ function App() {
     let res = getOrderesNotes(notes);
 
     setItems(res);
+    setCopyItems(res);
 
     let index = res.findIndex((x) => x.id === id);
 
@@ -77,6 +79,7 @@ function App() {
     notes[actualIndex].title = title;
 
     setItems(notes);
+    setCopyItems(notes);
   };
 
   const onChangeText = (e) => {
@@ -86,27 +89,47 @@ function App() {
     notes[actualIndex].text = text;
 
     setItems(notes);
+    setCopyItems(notes);
   };
 
   const renderEditiorAndPreviewUI = () => {
     return (
       <>
         <Editor
-          item={items[actualIndex]}
+          item={copyItems[actualIndex]}
           onChangeTitle={onChangeTitle}
           onChangeText={onChangeText}
         />
-        <Preview text={items[actualIndex].text} />
+        <Preview text={copyItems[actualIndex].text} />
       </>
     );
+  };
+
+  const handleSearch = (e) => {
+    const q = e.target.value;
+
+    if (q === "") {
+      setCopyItems([...items]);
+    } else {
+      let res = items.filter(
+        (x) => x.title.indexOf(q) >= 0 || x.text.indexOf(q) >= 0
+      );
+
+      if (res.length === 0) {
+        setActualIndex(-1);
+      } else {
+        setCopyItems([...res]);
+        setActualIndex(0);
+      }
+    }
   };
 
   return (
     <div className="App container">
       <Panel>
-        <Menu onNew={handleNew} />
+        <Menu onNew={handleNew} onSearch={handleSearch} />
         <List>
-          {items.map((item, i) => {
+          {copyItems.map((item, i) => {
             return (
               <Item
                 key={item.id}
