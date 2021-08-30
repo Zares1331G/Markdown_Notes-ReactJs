@@ -21,9 +21,46 @@ function App() {
       created: Date.now(),
     };
 
-    setItems([...items, note]);
+    let notes = [...items];
+
+    notes.unshift(note);
+
+    let res = getOrderesNotes(notes);
+
+    setItems(res);
   };
-  const handlePinned = () => {};
+  const handlePinned = (item, i) => {
+    setActualIndex(i);
+
+    let id = item.id;
+    let notes = [...items];
+    notes[i].pinned = !notes[i].pinned;
+
+    let res = getOrderesNotes(notes);
+
+    setItems(res);
+
+    let index = res.findIndex((x) => x.id === id);
+
+    setActualIndex(index);
+  };
+
+  const getOrderesNotes = (arr) => {
+    let items = [...arr];
+    let pinned = items.filter((x) => x.pinned === true);
+    let rest = items.filter((x) => x.pinned === false);
+
+    pinned = sortByDate(pinned, true);
+    rest = sortByDate(rest, true);
+
+    return [...pinned, ...rest];
+  };
+
+  const sortByDate = (arr, asc = false) => {
+    if (asc)
+      return arr.sort((a, b) => new Date(b.created) - new Date(a.created));
+    return arr.sort((a, b) => new Date(a.created) - new Date(b.created));
+  };
 
   const handleSelectNote = (item, e) => {
     if (!e.target.classList.contains("note")) return;
