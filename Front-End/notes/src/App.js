@@ -15,8 +15,8 @@ function App() {
   const handleNew = () => {
     const note = {
       id: uuid(),
-      title: "Este es el titulo",
-      text: "Funcioan",
+      title: '[Title]',
+      text: '[Text]',
       pinned: false,
       created: Date.now(),
     };
